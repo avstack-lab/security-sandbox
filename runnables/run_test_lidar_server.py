@@ -1,7 +1,7 @@
 import time
 import socket
 import numpy as np
-from socket_utils import send_msg
+from socket_utils import send_msg, recv_msg
 
 
 def main():
@@ -20,10 +20,16 @@ def main():
         with conn:
             print(f"Connected to by {addr}")
             while True:
+                # -- send
                 n_pts = np.random.randint(low=30000, high=40000)
                 A = np.random.randn(n_pts, n_chan)
                 send_msg(conn, A.tobytes())
-                print(f"Sent data of shape {A.shape} from server")
+                print(f"Sent data from server")
+
+                # -- receive
+                data = recv_msg(conn)
+                A2 = np.reshape(np.frombuffer(data), (-1, n_chan))
+                print(f"Received data at the server")
                 time.sleep(1./send_rate)
 
 
