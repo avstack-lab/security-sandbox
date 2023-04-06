@@ -1,0 +1,5 @@
+---
+attacker: FalsePositiveObjectAttacker
+awareness: none
+framerate: 10
+dataset: kitti
