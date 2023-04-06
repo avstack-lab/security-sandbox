@@ -1,0 +1,9 @@
+[submodule "submodules/lib-avstack-core"]
+	path = submodules/lib-avstack-core
+	url = https://github.com/avstack-lab/lib-avstack-core
+[submodule "submodules/lib-avstack-api"]
+	path = submodules/lib-avstack-api
+	url = https://github.com/avstack-lab/lib-avstack-api
+[submodule "submodules/lib-avsec"]
+	path = submodules/lib-avsec
+	url = https://github.com/avstack-lab/lib-avsec
