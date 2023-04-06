@@ -6,6 +6,7 @@ import yaml
 import avsec
 
 
+
 def create_lidar_attacker(attacker_config):
     with open(attacker_config, 'r') as f:
         config = yaml.safe_load(f)
