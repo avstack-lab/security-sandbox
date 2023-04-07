@@ -1,4 +1,4 @@
-NAME := .
+NAME := security-sandbox
 INSTALL_STAMP := .install.stamp
 POETRY := $(shell command -v poetry 2> /dev/null)
 .DEFAULT_GOAL := help
@@ -36,8 +36,8 @@ lint: $(INSTALL_STAMP)
 
 .PHONY: format
 format: $(INSTALL_STAMP)
-		$(POETRY) run isort --profile=black --lines-after-imports=2 ./tests/ $(NAME)
-		$(POETRY) run black ./tests/ $(NAME)
+		$(POETRY) run isort --profile=black --lines-after-imports=2 ./tests/ runnables configs
+		$(POETRY) run black ./tests/ runnables configs
 
 .PHONY: test
 test: $(INSTALL_STAMP)
@@ -53,8 +53,14 @@ run_test_client: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_test_lidar_client.py \
 			--host localhost --port 3000 --n_channels 4
 
-.PHONY: run_attacker_1
-run_attacker_1: $(INSTALL_STAMP)
+.PHONY: run_attacker_passthrough
+run_attacker_passthrough: $(INSTALL_STAMP)
+		$(POETRY) run python runnables/run_lidar_attacker.py \
+			configs/lidar_passthrough.yml \
+			--host localhost --port 3000 --n_channels 4
+
+.PHONY: run_attacker_fp
+run_attacker_fp: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_lidar_attacker.py \
 			configs/lidar_fp_attacker.yml \
 			--host localhost --port 3000 --n_channels 4
