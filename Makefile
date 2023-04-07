@@ -1,4 +1,4 @@
-NAME := security-sandbox
+NAME := .
 INSTALL_STAMP := .install.stamp
 POETRY := $(shell command -v poetry 2> /dev/null)
 .DEFAULT_GOAL := help
@@ -43,7 +43,18 @@ format: $(INSTALL_STAMP)
 test: $(INSTALL_STAMP)
 		$(POETRY) run pytest ./tests/ --cov-report term-missing --cov-fail-under 0 --cov $(NAME)
 
+.PHONY: run_test_server
+run_test_server: $(INSTALL_STAMP)
+		$(POETRY) run python runnables/run_test_lidar_server.py \
+			--host localhost --port 3000 --n_channels 4
+
+.PHONY: run_test_client
+run_test_client: $(INSTALL_STAMP)
+		$(POETRY) run python runnables/run_test_lidar_client.py \
+			--host localhost --port 3000 --n_channels 4
 
 .PHONY: run_attacker_1
 run_attacker_1: $(INSTALL_STAMP)
-		$(POETRY) run python runnables/run_lidar_attacker.py configs/lidar_fp_attacker.yml
+		$(POETRY) run python runnables/run_lidar_attacker.py \
+			configs/lidar_fp_attacker.yml \
+			--host localhost --port 3000 --n_channels 4

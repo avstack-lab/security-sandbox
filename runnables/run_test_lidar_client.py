@@ -1,23 +1,19 @@
-import time
+import argparse
 import socket
+import time
+
 import numpy as np
-from socket_utils import send_msg, recv_msg
+from socket_utils import recv_msg, send_msg
 
 
-def main():
-    # Set up the socket
-    HOST = "127.0.0.1"
-    PORT = 4001
-
+def main(args):
     # Send the data
-    n_chan = 4
-    send_rate = 10  # Hz
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
+        s.connect((args.host, args.port))
         while True:
             # -- receive
             data = recv_msg(s)
-            A = np.reshape(np.frombuffer(data), (-1, n_chan))
+            A = np.reshape(np.frombuffer(data), (-1, args.n_channels))
             print(f"Received data at client")
 
             # -- send
@@ -25,5 +21,12 @@ def main():
             send_msg(s, A.tobytes())
             print(f"Sent data from the client")
 
+
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="localhost", type=str)
+    parser.add_argument("--port", default=3000, type=int)
+    parser.add_argument("--n_channels", default=4, type=int, choices=[3,4,5], help="Number of point cloud channels (columns)")
+
+    args = parser.parse_args()
+    main(args)

@@ -14,12 +14,12 @@ We've set up a simple socket demonstration to illustrate what this sending and r
 
 In terminal 1, run:
 ```
-poetry run python runnables/run_test_lidar_server.py
+make run_test_server
 ```
 
 In terminal 2, run:
 ```
-poetry run python runnables/run_test_lidar_client.py
+make run_test_server
 ```
 
 You'll see that the server sends the data to the client, the client performs some "operation", and then sends back the data to the server. The server, in this case, waits until it has received the data back from the client until it continues.
