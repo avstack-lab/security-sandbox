@@ -46,21 +46,26 @@ test: $(INSTALL_STAMP)
 .PHONY: run_test_server
 run_test_server: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_test_lidar_server.py \
-			--host localhost --port 3000 --n_channels 4
+			--host 0.0.0.0 --port 3000 --n_channels 4
+
+.PHONY: run_test_server_without_poetry
+run_test_server_without_poetry:
+		python3 runnables/run_test_lidar_server.py \
+			--host 0.0.0.0 --port 3000 --n_channels 4
 
 .PHONY: run_test_client
 run_test_client: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_test_lidar_client.py \
-			--host localhost --port 3000 --n_channels 4
+			--host 0.0.0.0 --port 3000 --n_channels 4
 
 .PHONY: run_attacker_passthrough
 run_attacker_passthrough: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_lidar_attacker.py \
 			configs/lidar_passthrough.yml \
-			--host localhost --port 3000 --n_channels 4
+			--host 0.0.0.0 --port 3000 --n_channels 4
 
 .PHONY: run_attacker_fp
 run_attacker_fp: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_lidar_attacker.py \
 			configs/lidar_fp_attacker.yml \
-			--host localhost --port 3000 --n_channels 4
+			--host 0.0.0.0 --port 3000 --n_channels 4
