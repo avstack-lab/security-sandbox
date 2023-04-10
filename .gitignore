@@ -5,6 +5,7 @@ __pycache__
 
 # DATA
 /sim-results/
+*.npy
 *.p
 *.pkl
 *.txt

@@ -9,11 +9,12 @@ import yaml
 from socket_utils import recv_msg, send_msg
 
 
-def create_lidar_attacker(attacker_config):
+def create_lidar_attacker(attacker_config, trace_directory):
     with open(attacker_config, "r") as f:
         config = yaml.safe_load(f)
     if config["attacker"] == "FalsePositiveObjectAttacker":
         attacker = avsec.attack.lidar.attacker.FalsePositiveObjectAttacker(
+            trace_directory=trace_directory,
             awareness=config["awareness"],
             framerate=config["framerate"],
             dataset=config["dataset"],
@@ -60,7 +61,7 @@ def main(args):
             f"Cannot find attacker config at {args.attacker_config}"
         )
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        attacker = create_lidar_attacker(args.attacker_config)
+        attacker = create_lidar_attacker(args.attacker_config, args.trace_directory)
         runnable = RunnableAttacker(
             attacker, sock, args.host, args.port, n_channels=args.n_channels
         )
@@ -76,6 +77,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("attacker_config", type=str)
+    parser.add_argument("--trace_directory", default='./data/attack_traces/traces')
     parser.add_argument("--host", default="localhost", type=str)
     parser.add_argument("--port", default=3000, type=int)
     parser.add_argument(
