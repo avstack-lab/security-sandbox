@@ -1,0 +1,8 @@
+---
+attacker: ReverseReplayAttacker
+awareness: none
+framerate: 10
+dataset: kitti
+dt_stable: 4
+dt_attack: 30
+dt_repeat: 0.5

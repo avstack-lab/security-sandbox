@@ -69,3 +69,9 @@ run_attacker_fp: $(INSTALL_STAMP)
 		$(POETRY) run python runnables/run_lidar_attacker.py \
 			configs/lidar_fp_attacker.yml \
 			--host 0.0.0.0 --port 3000 --n_channels 4
+
+.PHONY: run_attacker_rev_replay
+run_attacker_rev_replay: $(INSTALL_STAMP)
+		$(POETRY) run python runnables/run_lidar_attacker.py \
+			configs/lidar_rev_replay_attacker.yml \
+			--host 0.0.0.0 --port 3000 --n_channels 4	

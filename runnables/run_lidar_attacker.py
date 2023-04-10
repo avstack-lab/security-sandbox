@@ -19,6 +19,15 @@ def create_lidar_attacker(attacker_config, trace_directory):
             framerate=config["framerate"],
             dataset=config["dataset"],
         )
+    elif config["attacker"] == "ReverseReplayAttacker":
+        attacker = avsec.attack.lidar.attacker.ReverseReplayAttacker(
+            dt_stable=config["dt_stable"],
+            dt_attack=config["dt_attack"],
+            dt_repeat=config["dt_repeat"],
+            awareness=config["awareness"],
+            framerate=config["framerate"],
+            dataset=config["dataset"],
+        )
     elif config["attacker"] == "PassthroughAttacker":
         attacker = avsec.attack.lidar.attacker.PassthroughAttacker(
             dataset=config["dataset"]
