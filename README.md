@@ -11,6 +11,10 @@ Ensure that when you clone the repository you also clone the submodules:
 git clone --recurse-submodules https://github.com/avstack-lab/security-sandbox
 ```
 
+### Download Data
+
+Some attacks require you to download some attack trace data. See the `data` folder and run the shell scripts in that folder to download the data.
+
 ### Choice 1: Natively
 
 Running this repository natively is only available on a Linux machine. It also currently only works with `python3.8`, so if you don't have `python3.8` installed, you'll need to run something like:
